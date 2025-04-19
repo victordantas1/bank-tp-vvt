@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import date
-from exeptions.conta_exceptions import SaldoNegativoError, ContaComSaldoError
+from exceptions.conta_exceptions import SaldoNegativoError, ContaComSaldoError
 from usuario import Usuario
 
 
