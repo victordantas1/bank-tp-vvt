@@ -32,10 +32,10 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo += valor
+        self.__saldo = self.__saldo + valor
         return self.get_saldo()
 
-    def sacar(self, valor: float) -> float:
+    def saque(self, valor: float) -> float:
         """
         Sacar um valor no saldo da conta
         Args:
@@ -44,7 +44,7 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo -= valor
+        self.__saldo = self.__saldo - valor
         return self.get_saldo()
 
     def transferir(self, valor: float, conta: Conta) -> float:
@@ -67,7 +67,7 @@ class Conta:
         Returns: String com mensagem de fechamento da conta
 
         """
-        if self.__saldo <= 0:
+        if self.__saldo < 0:
             raise SaldoNegativoError(f'Saldo Negativo! Saldo atual: {self.__saldo}')
         elif self.__saldo > 0:
             raise ContaComSaldoError(f'Conta com Saldo! Saldo atual: {self.__saldo}')
@@ -83,16 +83,16 @@ class Conta:
         Returns: true se o saldo esta negativo, false se o saldo nao esta negativo
 
         """
-        return True if self.__saldo <= 0 else False
+        return True if self.__saldo < 0 else False
 
     def aplica_juros(self, porcentagem: float) -> float:
         """
-        Aplica uma porcentagem de juros encima do saldo da conta
+        Aplica uma porcentagem de juros no saldo da conta
         Args:
             porcentagem: porcentagem de juros a ser aplicado
 
         Returns: novo saldo da conta
 
         """
-        self.__saldo *= porcentagem
+        self.__saldo = self.__saldo * porcentagem
         return self.get_saldo()
