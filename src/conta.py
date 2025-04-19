@@ -6,11 +6,11 @@ from usuario import Usuario
 
 
 class Conta:
-    def __init__(self, numero_conta: int, agencia_conta: str, numero_branco: str, nome_branco: str, usuario: Usuario, saldo: float, data_criacao: date, ativa: bool):
+    def __init__(self, numero_conta: int, agencia_conta: str, numero_banco: str, nome_banco: str, usuario: Usuario, saldo: float, data_criacao: date, ativa: bool):
         self.numero_conta = numero_conta
         self.agencia_conta = agencia_conta
-        self.numero_branco = numero_branco
-        self.nome_branco = nome_branco
+        self.numero_banco = numero_banco
+        self.nome_banco = nome_banco
         self.usuario = usuario
         self.__saldo = saldo
         self.data_criacao = data_criacao
