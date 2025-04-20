@@ -1,23 +1,25 @@
 from __future__ import annotations
 
 from datetime import date
+from typing import List
+
 from exceptions.conta_exceptions import SaldoNegativoError, ContaComSaldoError
 from usuario import Usuario
 from mongoengine import Document, StringField, DateTimeField, BooleanField, IntField, ReferenceField, FloatField
 
 
 class Conta(Document):
-    numero_conta = IntField()
-    agencia_conta = StringField()
-    numero_banco = StringField()
-    nome_banco = StringField()
-    usuario = ReferenceField(Usuario)
-    saldo = FloatField(db_field='saldo')
-    data_criacao = DateTimeField()
-    ativa = BooleanField()
+    numero_conta = IntField(required=True, unique=True)
+    agencia_conta = StringField(required=True)
+    numero_banco = StringField(required=True)
+    nome_banco = StringField(required=True)
+    usuario = ReferenceField(Usuario, required=True)
+    saldo = FloatField(required=True)
+    data_criacao = DateTimeField(required=True)
+    ativa = BooleanField(required=True)
 
-    def __repr__(self):
-        return f"Usuario: {self.usuario.nome}, Conta: {self.agencia_conta}, {self.numero_conta}"
+    def __str__(self):
+        return f"Numero Conta: {self.numero_conta}\nAgencia Conta: {self.agencia_conta}\nSaldo: {self.saldo}"
 
     def get_saldo(self) -> float:
         """
@@ -99,3 +101,16 @@ class Conta(Document):
         """
         self.saldo = self.saldo * porcentagem
         return self.get_saldo()
+
+    @staticmethod
+    def insert_all_contas(contas: List[Conta]):
+        for conta in contas:
+            conta.save()
+
+    @staticmethod
+    def get_all_contas():
+        return Conta.objects.all()
+
+    @staticmethod
+    def find_by_numero_conta(numero_conta: int):
+        return Conta.objects(numero_conta=numero_conta).first()
