@@ -3,25 +3,28 @@ from __future__ import annotations
 from datetime import date
 from exceptions.conta_exceptions import SaldoNegativoError, ContaComSaldoError
 from usuario import Usuario
+from mongoengine import Document, StringField, DateTimeField, BooleanField, IntField, ReferenceField, FloatField
 
 
-class Conta:
-    def __init__(self, numero_conta: int, agencia_conta: str, numero_banco: str, nome_banco: str, usuario: Usuario, saldo: float, data_criacao: date, ativa: bool):
-        self.numero_conta = numero_conta
-        self.agencia_conta = agencia_conta
-        self.numero_banco = numero_banco
-        self.nome_banco = nome_banco
-        self.usuario = usuario
-        self.__saldo = saldo
-        self.data_criacao = data_criacao
-        self.ativa = ativa
+class Conta(Document):
+    numero_conta = IntField()
+    agencia_conta = StringField()
+    numero_banco = StringField()
+    nome_banco = StringField()
+    usuario = ReferenceField(Usuario)
+    saldo = FloatField(db_field='saldo')
+    data_criacao = DateTimeField()
+    ativa = BooleanField()
+
+    def __repr__(self):
+        return f"Usuario: {self.usuario.nome}, Conta: {self.agencia_conta}, {self.numero_conta}"
 
     def get_saldo(self) -> float:
         """
         Retorna o saldo da conta
         Returns: saldo da conta
         """
-        return self.__saldo
+        return self.saldo
 
     def deposito(self, valor: float) -> float:
         """
@@ -32,7 +35,7 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo = self.__saldo + valor
+        self.saldo = self.saldo + valor
         return self.get_saldo()
 
     def saque(self, valor: float) -> float:
@@ -44,7 +47,7 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo = self.__saldo - valor
+        self.saldo = self.saldo - valor
         return self.get_saldo()
 
     def transferir(self, valor: float, conta: Conta) -> float:
@@ -57,7 +60,7 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo -= valor
+        self.saldo -= valor
         conta.deposito(valor)
         return self.get_saldo()
 
@@ -67,10 +70,10 @@ class Conta:
         Returns: String com mensagem de fechamento da conta
 
         """
-        if self.__saldo < 0:
-            raise SaldoNegativoError(f'Saldo Negativo! Saldo atual: {self.__saldo}')
-        elif self.__saldo > 0:
-            raise ContaComSaldoError(f'Conta com Saldo! Saldo atual: {self.__saldo}')
+        if self.saldo < 0:
+            raise SaldoNegativoError(f'Saldo Negativo! Saldo atual: {self.saldo}')
+        elif self.saldo > 0:
+            raise ContaComSaldoError(f'Conta com Saldo! Saldo atual: {self.saldo}')
         else:
             self.usuario = None
             self.ativa = False
@@ -83,7 +86,7 @@ class Conta:
         Returns: true se o saldo esta negativo, false se o saldo nao esta negativo
 
         """
-        return True if self.__saldo < 0 else False
+        return True if self.saldo < 0 else False
 
     def aplica_juros(self, porcentagem: float) -> float:
         """
@@ -94,5 +97,5 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo = self.__saldo * porcentagem
+        self.saldo = self.saldo * porcentagem
         return self.get_saldo()

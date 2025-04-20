@@ -1,15 +1,15 @@
 from exceptions.conta_exceptions import ContaComSaldoError, SaldoNegativoError
 from conta import Conta
 from usuario import Usuario
-from datetime import date
+from datetime import date, datetime
 import pytest
 
 class TestConta:
 
     def test_get_saldo_when_conta_com_saldo_then_retorne_saldo(self):
         # Arrange
-        usuario = Usuario("Ana Silva", "ana.silva@example.com", "senha123", "12345678901", date(1990, 5, 10))
-        conta = Conta(1001, "1234-5", "001", "Banco VVT", usuario, 1000.0, date.today(), True)
+        usuario = Usuario(nome="Ana Silva", email="ana.silva@example.com", senha="senha123", cpf="12345678901", data_nascimento=date(1990, 5, 10))
+        conta = Conta(numero_conta=1001, agencia_conta="1234-5", numero_banco="001", nome_banco="Banco VVT", usuario=usuario, saldo=1000.0, data_criacao=date.today(), ativa=True)
 
         # Act
         saldo = conta.get_saldo()
@@ -25,7 +25,7 @@ class TestConta:
         conta_com_saldo.deposito(valor)
 
         assert 1100.0 == conta_com_saldo.get_saldo()
-        
+
     def test_saque_when_conta_com_saldo_then_remove_valor_do_saldo(self, conta_com_saldo):
         # Arrange
         valor = 100
@@ -34,11 +34,11 @@ class TestConta:
         conta_com_saldo.saque(valor)
 
         assert 900.0 == conta_com_saldo.get_saldo()
-        
+
     def test_transferir_when_conta_com_saldo_then_debita_na_conta_origem(self, conta_com_saldo):
         # Arrange
-        usuario_destino = Usuario("Carlos Martins", "carlos.martins@example.com", "senha1234", "03004508902", date(1991, 6, 7))
-        conta_destino = Conta(1002, "1234-5", "001", "Banco VVT", usuario_destino, 2000.0, date.today(), True)
+        usuario_destino = Usuario(nome="Carlos Martins", email="carlos.martins@example.com", senha="senha1234", cpf="03004508902", data_nascimento=date(1991, 6, 7))
+        conta_destino = Conta(numero_conta=1002, agencia_conta="1234-5", numero_banco="001", nome_banco="Banco VVT", usuario=usuario_destino, saldo=2000.0, data_criacao=datetime.now(), ativa=True)
 
         # Act
         conta_com_saldo.transferir(200, conta_destino)
@@ -48,8 +48,10 @@ class TestConta:
 
     def test_tranferir_when_conta_com_saldo_then_transfere_credita_na_conta_destino(self, conta_com_saldo):
         # Arrange
-        usuario_destino = Usuario("Carlos Martins", "carlos.martins@example.com", "senha1234", "03004508902", date(1991, 6, 7))
-        conta_destino = Conta(1002, "1234-5", "001", "Banco VVT", usuario_destino, 2000.0, date.today(), True)
+        usuario_destino = Usuario(nome="Carlos Martins", email="carlos.martins@example.com", senha="senha1234",
+                                  cpf="03004508902", data_nascimento=date(1991, 6, 7))
+        conta_destino = Conta(numero_conta=1002, agencia_conta="1234-5", numero_banco="001", nome_banco="Banco VVT",
+                              usuario=usuario_destino, saldo=2000.0, data_criacao=datetime.now(), ativa=True)
 
         # Act
         conta_com_saldo.transferir(200, conta_destino)

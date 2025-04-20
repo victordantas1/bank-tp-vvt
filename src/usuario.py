@@ -1,10 +1,9 @@
 from datetime import date
+from mongoengine import Document, StringField, DateTimeField
 
-
-class Usuario:
-    def __init__(self, nome: str, email: str, senha: str, cpf: str, data_nascimento: date):
-        self.nome = nome
-        self.email = email
-        self.senha = senha
-        self.cpf = cpf
-        self.data_nascimento = data_nascimento
+class Usuario(Document):
+    nome = StringField()
+    email = StringField()
+    senha = StringField()
+    cpf = StringField()
+    data_nascimento = DateTimeField()

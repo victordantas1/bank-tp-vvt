@@ -1,0 +1,11 @@
+services:
+  mongo-bank:
+    image: mongo:8.0
+    container_name: mongo-bank
+    ports:
+      - '27018:27017'
+    volumes:
+      - mongo-bank:/data/db
+
+volumes:
+  mongo-bank:

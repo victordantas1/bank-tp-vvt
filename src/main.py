@@ -1,9 +1,11 @@
-"""
+from urllib import request
+
+from flask import Flask, render_template, request
 from conta import Conta
 from usuario import Usuario
 from datetime import date
 
-def usuarios(self):
+def usuarios():
     return [
         Usuario("Ana Silva", "ana.silva@example.com", "senha123", "12345678901", date(1990, 5, 10)),
         Usuario("Bruno Souza", "bruno.souza@example.com", "senha456", "23456789012", date(1985, 8, 22)),
@@ -18,7 +20,7 @@ def usuarios(self):
     ]
 
 
-def contas(self, usuarios):
+def contas(cria_usuarios):
     return [
         Conta(
             numero_conta=1001 + i,
@@ -30,12 +32,24 @@ def contas(self, usuarios):
             data_criacao=date.today(),
             ativa=True
         )
-        for i, usuario in enumerate(usuarios)
+        for i, usuario in enumerate(cria_usuarios)
     ]
 
-def main():
-        pass
+app = Flask(__name__)
 
-if __name__ == "__main__":
-    main()
-"""
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+
+
+@app.route('/usuarios', methods=['GET'])
+def get_usuarios():
+    return
+
+if __name__ == '__main__':
+    app.run(debug=True)
