@@ -19,7 +19,9 @@ class Conta(Document):
     ativa = BooleanField(required=True)
 
     def __str__(self):
-        return f"Numero Conta: {self.numero_conta}\nAgencia Conta: {self.agencia_conta}\nSaldo: {self.saldo}"
+        return (f"Numero Conta: {self.numero_conta}\n"
+                f"Agencia Conta: {self.agencia_conta}\n"
+                f"Saldo: {self.saldo}")
 
     def get_saldo(self) -> float:
         """
