@@ -41,7 +41,7 @@ def cria_contas(cria_usuarios):
 
 def acessar_conta(conta_encontrada):
     while True:
-        print(f"\n === Menu Usuário de {conta_encontrada.usuario.nome} ===")
+        print(f"\n=== Menu de {conta_encontrada.usuario.nome.upper()} ===")
         print(f"\nSaldo Atual: {conta_encontrada.get_saldo()}")
         print("1 - Fazer Saque")
         print("2 - Fazer Deposito")
@@ -69,6 +69,7 @@ def acessar_conta(conta_encontrada):
 
 
 def cria_conta(lista_usuarios, lista_contas):
+    global numero_conta_atual
     nome = input("Digite seu nome: ")
     email = input("Digite sua e-mail: ")
 
@@ -104,7 +105,7 @@ def main():
             cpf = input("Digite o CPF: ")
             conta_encontrada = next((c for c in lista_contas if c.usuario.cpf == cpf), None)
             if conta_encontrada:
-                print(f"\n Bem-vindo(a), {conta_encontrada.usuario.nome} !")
+                print(f"\n Bem-vindo(a), {conta_encontrada.usuario.nome.upper()} !")
                 print(f" Conta: {conta_encontrada.numero_conta}")
                 acessar_conta(conta_encontrada)
 
