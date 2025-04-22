@@ -57,7 +57,7 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo -= valor
+        self.__saldo = self.__saldo - valor
         conta.deposito(valor)
         return self.get_saldo()
 
