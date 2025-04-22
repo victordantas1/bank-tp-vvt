@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import date
-from exceptions.conta_exceptions import SaldoNegativoError, ContaComSaldoError
+from exceptions.conta_exceptions import SaldoNegativoError, ContaComSaldoError, ValorInvalidoError, SaldoInsuficienteError
 from usuario import Usuario
 
 
@@ -32,10 +32,13 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo = self.__saldo + valor
+        if valor > 0:
+            self.__saldo = self.__saldo + valor
+        else:
+            raise ValorInvalidoError("Valor invalido")
         return self.get_saldo()
 
-    def saque(self, valor: float) -> float:
+    def saque(self, valor: int) -> float:
         """
         Sacar um valor no saldo da conta
         Args:
@@ -44,8 +47,15 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo = self.__saldo - valor
+        if valor <= 0:
+            raise ValorInvalidoError("Valor invalido")
+        elif self.__saldo >= valor:
+            self.__saldo = self.__saldo - valor
+        else:
+            raise SaldoInsuficienteError(f"Valor superior ao saldo da conta. Saldo Atual: {self.__saldo}")
+
         return self.get_saldo()
+
 
     def transferir(self, valor: float, conta: Conta) -> float:
         """

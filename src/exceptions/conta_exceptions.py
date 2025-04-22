@@ -3,3 +3,9 @@ class SaldoNegativoError(Exception):
 
 class ContaComSaldoError(Exception):
     pass
+
+class SaldoInsuficienteError(Exception):
+    pass
+
+class ValorInvalidoError(Exception):
+    pass
