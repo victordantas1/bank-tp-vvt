@@ -54,6 +54,7 @@ def imprime_menu_conta(conta: Conta) -> None:
     print("1 - Fazer Saque")
     print("2 - Fazer Deposito")
     print("3 - Fazer Tranferencia")
+    print("4 - Verificar se Saldo esta negativo")
     print("0 - Voltar")
 
 def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta:
@@ -64,6 +65,8 @@ def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
         imprime_menu_conta(conta)
         opcao = int(input("Escolha uma opcao: "))
         match opcao:
+            case 0:
+                break
             case 1:
                 valor = int(input("Digite o valor: "))
                 try:
@@ -72,7 +75,6 @@ def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
                     print(f"Saldo restante: {saldo}")
                 except Exception as error:
                     print(error)
-
             case 2:
                 valor = int(input("Digite o valor: "))
                 try:
@@ -81,7 +83,6 @@ def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
                     print(f"Saldo Atual: {saldo}")
                 except Exception as error:
                     print(error)
-            
             case 3:
                 cpf_conta_destino = input("Digite o CPF do destinatario: ")
                 conta_destino = busca_conta(lista_contas, cpf_conta_destino)
@@ -93,8 +94,8 @@ def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
                         print(f"Saldo Atual: {saldo}")
                     except Exception as error:
                         print(error)
-            case 0:
-                break
+            case 4:
+                print(f"Saldo negativo. Saldo Atual: {conta.get_saldo()}") if conta.saldo_negativo() else print(f"Saldo Positivo. Saldo Atual: {conta.get_saldo()}")
 
 
 def cria_conta(lista_usuarios, lista_contas):
