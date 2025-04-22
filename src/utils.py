@@ -1,3 +1,5 @@
+from typing import List
+
 from conta import Conta
 from usuario import Usuario
 from datetime import date
@@ -39,20 +41,33 @@ def cria_contas(cria_usuarios):
     ]
 
 
-def acessar_conta(conta_encontrada):
-    while True:
-        print(f"\n=== Menu de {conta_encontrada.usuario.nome.upper()} ===")
-        print(f"\nSaldo Atual: {conta_encontrada.get_saldo()}")
-        print("1 - Fazer Saque")
-        print("2 - Fazer Deposito")
-        print("0 - Voltar")
-        opcao = int(input("Escolha uma opcao: "))
+def imprime_menu():
+    print("\n === Menu Principal ===")
+    print("1 - Criar Conta")
+    print("2 - Acessar Conta")
+    print("3 - Deletar Conta")
+    print("0 - Sair")
 
+def imprime_menu_conta(conta: Conta) -> None:
+    print(f"\n=== Menu de {conta.usuario.nome.upper()} ===")
+    print(f"\nSaldo Atual: {conta.get_saldo()}")
+    print("1 - Fazer Saque")
+    print("2 - Fazer Deposito")
+    print("3 - Fazer Tranferencia")
+    print("0 - Voltar")
+
+def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta:
+    return next((c for c in lista_contas if c.usuario.cpf == cpf), None)
+
+def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
+    while True:
+        imprime_menu_conta(conta)
+        opcao = int(input("Escolha uma opcao: "))
         match opcao:
             case 1:
                 valor = int(input("Digite o valor: "))
                 try:
-                    saldo = conta_encontrada.saque(valor)
+                    saldo = conta.saque(valor)
                     print(f"Saque de R$ {valor} realizado com sucesso.")
                     print(f"Saldo restante: {saldo}")
                 except Exception as error:
@@ -61,11 +76,23 @@ def acessar_conta(conta_encontrada):
             case 2:
                 valor = int(input("Digite o valor: "))
                 try:
-                    saldo = conta_encontrada.deposito(valor)
+                    saldo = conta.deposito(valor)
                     print(f"Deposito de R$ {valor} realizado com sucesso.")
                     print(f"Saldo Atual: {saldo}")
                 except Exception as error:
                     print(error)
+            
+            case 3:
+                cpf_conta_destino = input("Digite o CPF do destinatario: ")
+                conta_destino = busca_conta(lista_contas, cpf_conta_destino)
+                if conta_destino:
+                    valor = float(input("Digite o valor da transferencia: "))
+                    try:
+                        saldo = conta.transferir(valor, conta_destino)
+                        print("Transferencia Realizada com sucesso.")
+                        print(f"Saldo Atual: {saldo}")
+                    except Exception as error:
+                        print(error)
             case 0:
                 break
 
