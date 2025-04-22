@@ -67,9 +67,14 @@ class Conta:
         Returns: novo saldo da conta
 
         """
-        self.__saldo = self.__saldo - valor
-        conta.deposito(valor)
-        return self.get_saldo()
+        if valor <= 0:
+            raise ValorInvalidoError("Valor invalido")
+        elif self.__saldo < valor:
+            raise SaldoInsuficienteError(f"Valor superior ao saldo da conta. Saldo Atual: {self.__saldo}")
+        else:
+            self.__saldo = self.__saldo - valor
+            conta.deposito(valor)
+            return self.get_saldo()
 
     def fechar_conta(self) -> str:
         """
