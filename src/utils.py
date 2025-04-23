@@ -3,6 +3,7 @@ import os
 from conta import Conta
 from usuario import Usuario
 from datetime import date
+import time
 
 numero_conta_atual = 1001
 AGENCIA_CONTA = "1234-5"
@@ -41,7 +42,7 @@ def cria_contas(usuarios: List[Usuario]) -> List[Conta]:
     ]
 
 
-def imprime_menu(): # pragma: no cover
+def imprime_menu() -> None: # pragma: no cover
     print("\n === Menu Principal ===")
     print("1 - Criar Conta")
     print("2 - Acessar Conta")
@@ -73,6 +74,7 @@ def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
             opcao = int(input("Escolha uma opcao: "))
             match opcao:
                 case 0:
+                    limpar_console()
                     break
                 case 1:
                     valor = int(input("Digite o valor: "))
@@ -82,6 +84,7 @@ def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
                         print(f"Saldo restante: {saldo}")
                     except Exception as error:
                         print(error)
+                        time.sleep(2)
                 case 2:
                     valor = int(input("Digite o valor: "))
                     try:
@@ -90,6 +93,7 @@ def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
                         print(f"Saldo Atual: {saldo}")
                     except Exception as error:
                         print(error)
+                        time.sleep(2)
                 case 3:
                     cpf_conta_destino = input("Digite o CPF do destinatario: ")
                     conta_destino = busca_conta(lista_contas, cpf_conta_destino)
@@ -101,12 +105,19 @@ def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
                             print(f"Saldo Atual: {saldo}")
                         except Exception as error:
                             print(error)
+                            time.sleep(2)
                 case 4:
                     print(f"Saldo negativo. Saldo Atual: {conta.get_saldo()}") if conta.saldo_negativo() else print(
                         f"Saldo Positivo. Saldo Atual: {conta.get_saldo()}")
                 case 5:
-                    print(f"Deseja mesmo fechar sua conta? (1 - sim | 0 - nao)")
-
+                    opcao = int(input(f"Deseja mesmo fechar sua conta (1 - sim | 0 - nao)?  "))
+                    if opcao == 1:
+                        try:
+                            deletar_conta(conta, lista_contas)
+                            break
+                        except Exception as error:
+                            print(error)
+                            time.sleep(2)
     else:
         print("Conta não encontrada!")
 
@@ -135,5 +146,5 @@ def deletar_conta(conta, lista_contas: List[Conta]) -> None:
     conta.fechar_conta()
     lista_contas.remove(conta)
 
-def limpar_console():
+def limpar_console(): # pragma: no cover
     os.system('cls' if os.name == 'nt' else 'clear')

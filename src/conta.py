@@ -38,7 +38,7 @@ class Conta:
         if valor > 0:
             self.__saldo = self.__saldo + valor
         else:
-            raise ValorInvalidoError("Valor invalido")
+            raise ValorInvalidoError("Valor invalido!!!".upper())
         return self.get_saldo()
 
     def saque(self, valor: int) -> float:
@@ -51,11 +51,11 @@ class Conta:
 
         """
         if valor <= 0:
-            raise ValorInvalidoError("Valor invalido")
+            raise ValorInvalidoError("Valor invalido".upper())
         elif self.__saldo >= valor:
             self.__saldo = self.__saldo - valor
         else:
-            raise SaldoInsuficienteError(f"Valor superior ao saldo da conta. Saldo Atual: {self.__saldo}")
+            raise SaldoInsuficienteError(f"Valor superior ao saldo da conta!! Saldo Atual: {self.__saldo}".upper())
 
         return self.get_saldo()
 
@@ -71,9 +71,9 @@ class Conta:
 
         """
         if valor <= 0:
-            raise ValorInvalidoError("Valor invalido")
+            raise ValorInvalidoError("Valor invalido!!!".upper())
         elif self.__saldo < valor:
-            raise SaldoInsuficienteError(f"Valor superior ao saldo da conta. Saldo Atual: {self.__saldo}")
+            raise SaldoInsuficienteError(f"Valor superior ao saldo da conta!! Saldo Atual: {self.__saldo}".upper())
         else:
             self.__saldo = self.__saldo - valor
             conta.deposito(valor)
@@ -86,9 +86,9 @@ class Conta:
 
         """
         if self.__saldo < 0:
-            raise SaldoNegativoError(f'Saldo Negativo! Saldo atual: {self.__saldo}')
+            raise SaldoNegativoError(f'Saldo Negativo!! Saldo atual: {self.__saldo}'.upper())
         elif self.__saldo > 0:
-            raise ContaComSaldoError(f'Conta com Saldo! Saldo atual: {self.__saldo}')
+            raise ContaComSaldoError(f'Conta com Saldo!! Saldo atual: {self.__saldo}'.upper())
         else:
             self.usuario = None
             self.ativa = False
