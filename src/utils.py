@@ -13,7 +13,7 @@ NOME_BANCO = "Banco VVT"
 def cria_usuarios() -> List[Usuario]:
     return [
         Usuario("Ana Silva", "ana.silva@example.com", "senha123", "12345678901", date(1990, 5, 10)),
-        Usuario("Bruno Souza", "bruno.souza@example.com", "senha456", "23456789012", date(1985, 7, 22)),
+        Usuario("Bruno Souza", "bruno.souza@example.com", "senha456", "23456789012", date(1985, 8, 22)),
         Usuario("Carlos Lima", "carlos.lima@example.com", "abc12345", "34567890123", date(1992, 2, 28)),
         Usuario("Daniela Rocha", "daniela.rocha@example.com", "minhasenha", "45678901234", date(1988, 11, 3)),
         Usuario("Eduardo Mendes", "eduardo.mendes@example.com", "segredo789", "56789012345", date(1995, 1, 15)),
