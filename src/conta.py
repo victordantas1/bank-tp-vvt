@@ -16,6 +16,9 @@ class Conta:
         self.data_criacao = data_criacao
         self.ativa = ativa
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.numero_conta})"
+
     def get_saldo(self) -> float:
         """
         Retorna o saldo da conta
