@@ -1,5 +1,5 @@
 from typing import List
-
+import os
 from conta import Conta
 from usuario import Usuario
 from datetime import date
@@ -45,7 +45,6 @@ def imprime_menu(): # pragma: no cover
     print("\n === Menu Principal ===")
     print("1 - Criar Conta")
     print("2 - Acessar Conta")
-    print("3 - Deletar Conta")
     print("0 - Sair")
 
 def imprime_menu_conta(conta: Conta) -> None: # pragma: no cover
@@ -55,6 +54,7 @@ def imprime_menu_conta(conta: Conta) -> None: # pragma: no cover
     print("2 - Fazer Deposito")
     print("3 - Fazer Tranferencia")
     print("4 - Verificar se Saldo esta negativo")
+    print("5 - Deletar Conta")
     print("0 - Voltar")
 
 def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta:
@@ -104,6 +104,9 @@ def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
                 case 4:
                     print(f"Saldo negativo. Saldo Atual: {conta.get_saldo()}") if conta.saldo_negativo() else print(
                         f"Saldo Positivo. Saldo Atual: {conta.get_saldo()}")
+                case 5:
+                    print(f"Deseja mesmo fechar sua conta? (1 - sim | 0 - nao)")
+
     else:
         print("Conta não encontrada!")
 
@@ -131,3 +134,6 @@ def cria_conta(lista_usuarios: List[Usuario], lista_contas: List[Conta]) -> Cont
 def deletar_conta(conta, lista_contas: List[Conta]) -> None:
     conta.fechar_conta()
     lista_contas.remove(conta)
+
+def limpar_console():
+    os.system('cls' if os.name == 'nt' else 'clear')

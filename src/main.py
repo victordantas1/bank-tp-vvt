@@ -21,11 +21,4 @@ def main():
                 acessar_conta(lista_contas)
 
 if __name__ == "__main__":
-    #main()
-    usuarios = cria_usuarios()
-    contas = cria_contas(usuarios)
-    conta = contas[1]
-    conta.saque(1000)
-    print(contas)
-    deletar_conta(conta, contas)
-    print(contas)
+    main()
