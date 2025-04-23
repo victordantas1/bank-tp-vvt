@@ -13,7 +13,7 @@ NOME_BANCO = "Banco VVT"
 def cria_usuarios() -> List[Usuario]:
     return [
         Usuario("Ana Silva", "ana.silva@example.com", "senha123", "12345678901", date(1990, 5, 10)),
-        Usuario("Bruno Souza", "bruno.souza@example.com", "senha456", "23456789012", date(1985, 8, 22)),
+        Usuario("Bruno Souza", "bruno.souza@example.com", "senha456", "23456789012", date(1985, 7, 22)),
         Usuario("Carlos Lima", "carlos.lima@example.com", "abc12345", "34567890123", date(1992, 2, 28)),
         Usuario("Daniela Rocha", "daniela.rocha@example.com", "minhasenha", "45678901234", date(1988, 11, 3)),
         Usuario("Eduardo Mendes", "eduardo.mendes@example.com", "segredo789", "56789012345", date(1995, 1, 15)),
@@ -40,7 +40,6 @@ def cria_contas(usuarios: List[Usuario]) -> List[Conta]:
         for i, usuario in enumerate(usuarios)
     ]
 
-
 def imprime_menu(): # pragma: no cover
     print("\n === Menu Principal ===")
     print("1 - Criar Conta")
@@ -57,10 +56,10 @@ def imprime_menu_conta(conta: Conta) -> None: # pragma: no cover
     print("4 - Verificar se Saldo esta negativo")
     print("0 - Voltar")
 
-def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta: # pragma: no cover
+def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta:
     return next((c for c in lista_contas if c.usuario.cpf == cpf), None)
 
-def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
+def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:  # pragma: no cover
     while True:
         imprime_menu_conta(conta)
         opcao = int(input("Escolha uma opcao: "))
@@ -98,7 +97,7 @@ def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
                 print(f"Saldo negativo. Saldo Atual: {conta.get_saldo()}") if conta.saldo_negativo() else print(f"Saldo Positivo. Saldo Atual: {conta.get_saldo()}")
 
 
-def cria_conta(lista_usuarios: List[Usuario], lista_contas: List[Conta]) -> Conta:
+def cria_conta(lista_usuarios: List[Usuario], lista_contas: List[Conta]) -> Conta: # pragma: no cover
     global numero_conta_atual
     nome = input("Digite seu nome: ")
     email = input("Digite sua e-mail: ")

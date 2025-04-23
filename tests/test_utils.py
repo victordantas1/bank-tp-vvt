@@ -10,8 +10,8 @@ def test_cria_usuarios():
     assert all(isinstance(u, Usuario) for u in usuarios)
     assert usuarios[0].nome == "Ana Silva"
     assert usuarios[-1].cpf == "01234567890"
-    assert usuarios.lenght() == 10
-    assert usuarios[0].email == "senha456"
+    assert len(usuarios) == 10
+    assert usuarios[0].email == "ana.silva@example.com"
 
 def test_cria_contas():
     usuarios = cria_usuarios()
@@ -35,3 +35,12 @@ def test_busca_conta_nao_encontra():
     conta = busca_conta(contas, "00000000000")
     assert conta is None
 
+def teste_busca_conta_quando_cpf_existe_entao_retorne_a_conta(lista_contas):
+    cpf = "12345678901"
+    conta = busca_conta(lista_contas, cpf=cpf)
+    assert conta is not None
+
+def teste_busca_conta_quando_cpf_nao_existe_entao_retorne_none(lista_contas):
+    cpf = "1234567890112"
+    conta = busca_conta(lista_contas, cpf=cpf)
+    assert conta is None
