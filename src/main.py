@@ -25,6 +25,5 @@ def main():
                     print("Conta não encontrada!")
 
 
-
 if __name__ == "__main__":
     main()

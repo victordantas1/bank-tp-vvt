@@ -10,7 +10,7 @@ NUMERO_BANCO = "001"
 NOME_BANCO = "Banco VVT"
 
 
-def cria_usuarios():
+def cria_usuarios() -> List[Usuario]:
     return [
         Usuario("Ana Silva", "ana.silva@example.com", "senha123", "12345678901", date(1990, 5, 10)),
         Usuario("Bruno Souza", "bruno.souza@example.com", "senha456", "23456789012", date(1985, 8, 22)),
@@ -25,7 +25,7 @@ def cria_usuarios():
     ]
 
 
-def cria_contas(cria_usuarios):
+def cria_contas(usuarios: List[Usuario]) -> List[Conta]:
     return [
         Conta(
             numero_conta=numero_conta_atual + i,
@@ -37,7 +37,7 @@ def cria_contas(cria_usuarios):
             data_criacao=date.today(),
             ativa=True
         )
-        for i, usuario in enumerate(cria_usuarios)
+        for i, usuario in enumerate(usuarios)
     ]
 
 
