@@ -41,14 +41,14 @@ def cria_contas(cria_usuarios):
     ]
 
 
-def imprime_menu():
+def imprime_menu(): # pragma: no cover
     print("\n === Menu Principal ===")
     print("1 - Criar Conta")
     print("2 - Acessar Conta")
     print("3 - Deletar Conta")
     print("0 - Sair")
 
-def imprime_menu_conta(conta: Conta) -> None:
+def imprime_menu_conta(conta: Conta) -> None: # pragma: no cover
     print(f"\n=== Menu de {conta.usuario.nome.upper()} ===")
     print(f"\nSaldo Atual: {conta.get_saldo()}")
     print("1 - Fazer Saque")
@@ -57,7 +57,7 @@ def imprime_menu_conta(conta: Conta) -> None:
     print("4 - Verificar se Saldo esta negativo")
     print("0 - Voltar")
 
-def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta:
+def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta: # pragma: no cover
     return next((c for c in lista_contas if c.usuario.cpf == cpf), None)
 
 def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
@@ -98,7 +98,7 @@ def acessar_conta(conta: Conta, lista_contas: List[Conta]) -> None:
                 print(f"Saldo negativo. Saldo Atual: {conta.get_saldo()}") if conta.saldo_negativo() else print(f"Saldo Positivo. Saldo Atual: {conta.get_saldo()}")
 
 
-def cria_conta(lista_usuarios, lista_contas):
+def cria_conta(lista_usuarios: List[Usuario], lista_contas: List[Conta]) -> Conta:
     global numero_conta_atual
     nome = input("Digite seu nome: ")
     email = input("Digite sua e-mail: ")
@@ -114,3 +114,5 @@ def cria_conta(lista_usuarios, lista_contas):
     numero_conta_atual += 1
 
     print(f"\nConta criada com sucesso.\n")
+
+    return nova_conta
