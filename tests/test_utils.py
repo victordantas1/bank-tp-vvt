@@ -1,4 +1,4 @@
-from utils import cria_usuarios, cria_contas, busca_conta, acessar_conta, cria_conta
+from utils import *
 import pytest
 from usuario import Usuario
 from conta import Conta  
@@ -35,12 +35,16 @@ def test_busca_conta_nao_encontra():
     conta = busca_conta(contas, "00000000000")
     assert conta is None
 
-def teste_busca_conta_quando_cpf_existe_entao_retorne_a_conta(lista_contas):
-    cpf = "12345678901"
-    conta = busca_conta(lista_contas, cpf=cpf)
-    assert conta is not None
+def teste_deletar_conta_quando_conta_existente_na_lista_entao_remove_conta():
+    # Arrange
+    usuarios = [ Usuario("Ana Silva", "ana.silva@example.com", "senha123", "12345678901", date(1990, 5, 10)),
+                 Usuario("Bruno Souza", "bruno.souza@example.com", "senha456", "23456789012", date(1985, 8, 22)) ]
+    contas = cria_contas(usuarios)
+    conta = contas[1]
+    conta.saque(1000)
 
-def teste_busca_conta_quando_cpf_nao_existe_entao_retorne_none(lista_contas):
-    cpf = "1234567890112"
-    conta = busca_conta(lista_contas, cpf=cpf)
-    assert conta is None
+    # Act
+    deletar_conta(conta, contas)
+
+    # Assert
+    assert len(contas) == 1
