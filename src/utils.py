@@ -4,6 +4,7 @@ from conta import Conta
 from usuario import Usuario
 from datetime import date
 import time
+from exceptions.conta_exceptions import ContaNaoEncontradaError
 
 numero_conta_atual = 1001
 AGENCIA_CONTA = "1234-5"
@@ -42,91 +43,12 @@ def cria_contas(usuarios: List[Usuario]) -> List[Conta]:
     ]
 
 
-def imprime_menu() -> None: # pragma: no cover
-    print("\n === Menu Principal ===")
-    print("1 - Criar Conta")
-    print("2 - Acessar Conta")
-    print("0 - Sair")
-
-def imprime_menu_conta(conta: Conta) -> None: # pragma: no cover
-    print(f"\n=== Menu de {conta.usuario.nome.upper()} ===")
-    print(f"\nSaldo Atual: {conta.get_saldo()}")
-    print("1 - Fazer Saque")
-    print("2 - Fazer Deposito")
-    print("3 - Fazer Tranferencia")
-    print("4 - Verificar se Saldo esta negativo")
-    print("5 - Deletar Conta")
-    print("0 - Voltar")
-
 def busca_conta(lista_contas: List[Conta], cpf: str) -> Conta:
-    return next((c for c in lista_contas if c.usuario.cpf == cpf), None)
-
-def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
-
-    cpf = input("Digite o CPF: ")
-    conta = busca_conta(lista_contas, cpf)
-    if conta:
-        print(f"\n Bem-vindo(a), {conta.usuario.nome.upper()} !")
-        print(f" Conta: {conta.numero_conta}")
-        while True:
-            imprime_menu_conta(conta)
-
-            opcao = int(input("Escolha uma opcao: "))
-            match opcao:
-                case 0:
-                    limpar_console()
-                    break
-                case 1:
-                    valor = int(input("Digite o valor: "))
-                    try:
-                        saldo = conta.saque(valor)
-                        print(f"Saque de R$ {valor} realizado com sucesso.")
-                        print(f"Saldo restante: {saldo}")
-                    except Exception as error:
-                        print(error)
-                        time.sleep(2)
-                case 2:
-                    valor = int(input("Digite o valor: "))
-                    try:
-                        saldo = conta.deposito(valor)
-                        print(f"Deposito de R$ {valor} realizado com sucesso.")
-                        print(f"Saldo Atual: {saldo}")
-                    except Exception as error:
-                        print(error)
-                        time.sleep(2)
-                case 3:
-                    cpf_conta_destino = input("Digite o CPF do destinatario: ")
-                    conta_destino = busca_conta(lista_contas, cpf_conta_destino)
-                    if conta_destino:
-                        valor = float(input("Digite o valor da transferencia: "))
-                        try:
-                            saldo = conta.transferir(valor, conta_destino)
-                            print("Transferencia Realizada com sucesso.")
-                            print(f"Saldo Atual: {saldo}")
-                        except Exception as error:
-                            print(error)
-                            time.sleep(2)
-                    else:
-                        print("Conta não encontrada!".upper())
-                        time.sleep(2)
-                case 4:
-                    print(f"Saldo negativo. Saldo Atual: {conta.get_saldo()}") if conta.saldo_negativo() else print(
-                        f"Saldo Positivo. Saldo Atual: {conta.get_saldo()}")
-                    time.sleep(2)
-                case 5:
-                    opcao = int(input(f"Deseja mesmo fechar sua conta (1 - sim | 0 - nao)?  "))
-                    if opcao == 1:
-                        try:
-                            deletar_conta(conta, lista_contas)
-                            break
-                        except Exception as error:
-                            print(error)
-                            time.sleep(2)
-
+    conta = next((c for c in lista_contas if c.usuario.cpf == cpf), None)
+    if conta is None:
+        raise ContaNaoEncontradaError('CONTA NAO ENCONTRADA!!')
     else:
-        print("Conta não encontrada!".upper())
-
-
+        return conta
 
 def cria_conta(lista_usuarios: List[Usuario], lista_contas: List[Conta]) -> Conta:
     global numero_conta_atual
@@ -150,6 +72,3 @@ def cria_conta(lista_usuarios: List[Usuario], lista_contas: List[Conta]) -> Cont
 def deletar_conta(conta, lista_contas: List[Conta]) -> None:
     conta.fechar_conta()
     lista_contas.remove(conta)
-
-def limpar_console(): # pragma: no cover
-    os.system('cls' if os.name == 'nt' else 'clear')

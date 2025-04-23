@@ -3,6 +3,7 @@ import pytest
 from usuario import Usuario
 from conta import Conta  
 from datetime import date
+from exceptions.conta_exceptions import *
 
 def test_cria_usuarios():
     usuarios = cria_usuarios()
@@ -32,8 +33,9 @@ def test_busca_conta_encontra():
 def test_busca_conta_nao_encontra():
     usuarios = cria_usuarios()
     contas = cria_contas(usuarios)
-    conta = busca_conta(contas, "00000000000")
-    assert conta is None
+    with pytest.raises(ContaNaoEncontradaError, match='CONTA NAO ENCONTRADA!!'):
+        conta = busca_conta(contas, "00000000000")
+
 
 def teste_deletar_conta_quando_conta_existente_na_lista_entao_remove_conta():
     # Arrange

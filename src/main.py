@@ -1,5 +1,6 @@
 import time
 
+from fluxo_main_functions import acessar_conta, imprime_menu
 from utils import *
 import os
 

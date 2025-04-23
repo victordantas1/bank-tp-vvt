@@ -9,3 +9,9 @@ class SaldoInsuficienteError(Exception):
 
 class ValorInvalidoError(Exception):
     pass
+
+class ContaNaoEncontradaError(Exception):
+    pass
+
+class SenhaInvalidaError(Exception):
+    pass

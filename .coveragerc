@@ -3,3 +3,4 @@ omit =
     src/main.py
     src/exceptions/*
     __init__.py
+    src/fluxo_main_functions.py
