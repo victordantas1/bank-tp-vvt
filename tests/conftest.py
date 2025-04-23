@@ -3,6 +3,8 @@ from usuario import Usuario
 from conta import Conta
 from datetime import date
 
+from utils import cria_usuarios, cria_contas
+
 
 @pytest.fixture
 def usuario_conta_com_saldo():
@@ -27,3 +29,11 @@ def usuario_conta_sem_saldo():
 @pytest.fixture
 def conta_sem_saldo(usuario_conta_sem_saldo):
     return Conta(1003, "1234-5", "001", "Banco VVT", usuario_conta_sem_saldo, 0, date.today(), True)
+
+@pytest.fixture
+def lista_usuarios():
+    return cria_usuarios()
+
+@pytest.fixture
+def lista_contas(lista_usuarios):
+    return cria_contas(lista_usuarios)
