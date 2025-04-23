@@ -18,7 +18,7 @@ class TestUtils:
 
     def teste_cria_contas_quando_lista_usuarios_eh_valida_entao_crie_contas_com_numero_conta_incremental(self, lista_usuarios):
         # Arrange
-        numeros_contas_esperados = range(1001, 1011)
+        numeros_contas_esperados = list(range(1001, 1011))
 
         # Act
         contas = cria_contas(lista_usuarios)

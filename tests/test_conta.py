@@ -30,14 +30,14 @@ class TesteConta:
         # Arrange
         valor = 0
 
-        with pytest.raises(ValorInvalidoError, match='Valor invalido'): # Assert
+        with pytest.raises(ValorInvalidoError, match='Valor invalido'.upper()): # Assert
             conta_com_saldo.deposito(valor) # Act
 
     def teste_deposito_quando_valor_inserido_eh_negativo_entao_lanca_excecao(self, conta_com_saldo):
         # Arrange
         valor = -100
 
-        with pytest.raises(ValorInvalidoError, match='Valor invalido'): # Assert
+        with pytest.raises(ValorInvalidoError, match='Valor invalido'.upper()): # Assert
             conta_com_saldo.deposito(valor) # Act
         
     def teste_saque_quando_conta_com_saldo_entao_debita_valor_do_saldo(self, conta_com_saldo):
@@ -54,14 +54,14 @@ class TesteConta:
         # Arrange
         valor = 0
 
-        with pytest.raises(ValorInvalidoError, match='Valor invalido'):  # Assert
+        with pytest.raises(ValorInvalidoError, match='Valor invalido'.upper()):  # Assert
             conta_com_saldo.saque(valor)  # Act
 
     def teste_saque_quando_valor_inserido_eh_negativo_entao_lanca_excecao(self, conta_com_saldo):
         # Arrange
         valor = -100
 
-        with pytest.raises(ValorInvalidoError, match='Valor invalido'):  # Assert
+        with pytest.raises(ValorInvalidoError, match='Valor invalido'.upper()):  # Assert
             conta_com_saldo.saque(valor)  # Act
 
     def teste_transferir_quando_conta_com_saldo_entao_debita_na_conta_origem(self, conta_com_saldo):
@@ -92,7 +92,7 @@ class TesteConta:
         conta_destino = Conta(1002, "1234-5", "001", "Banco VVT", usuario_destino, 2000.0, date.today(), True)
         valor = 0
 
-        with pytest.raises(ValorInvalidoError, match='Valor invalido'): # Assert
+        with pytest.raises(ValorInvalidoError, match='Valor invalido'.upper()): # Assert
             conta_com_saldo.transferir(valor, conta_destino) # Act
 
     def teste_tranferir_quando_valor_inserido_menor_que_zero_entao_lanca_excecao(self, conta_com_saldo):
@@ -101,7 +101,7 @@ class TesteConta:
         conta_destino = Conta(1002, "1234-5", "001", "Banco VVT", usuario_destino, 2000.0, date.today(), True)
         valor = -100
 
-        with pytest.raises(ValorInvalidoError, match='Valor invalido'): # Assert
+        with pytest.raises(ValorInvalidoError, match='Valor invalido'.upper()): # Assert
             conta_com_saldo.transferir(valor, conta_destino) # Act
 
     def teste_transferir_quando_valor_inserido_menor_igual_a_zero_entao_cancela_operacao(self, conta_com_saldo):
@@ -113,7 +113,7 @@ class TesteConta:
         saldo_fonte = conta_com_saldo.get_saldo()
         saldo_destino = conta_destino.get_saldo()
 
-        with pytest.raises(ValorInvalidoError, match='Valor invalido'):
+        with pytest.raises(ValorInvalidoError, match='Valor invalido'.upper()):
             conta_com_saldo.transferir(valor, conta_destino) # Act
 
         # Assert
@@ -121,12 +121,12 @@ class TesteConta:
         assert conta_destino.get_saldo() == saldo_destino
 
     def teste_fechar_conta_quando_conta_esta_com_saldo_entao_raise_exception(self, conta_com_saldo):
-        with pytest.raises(ContaComSaldoError, match=f"Conta com Saldo! Saldo atual: {conta_com_saldo.get_saldo()}"): # Assert
+        with pytest.raises(ContaComSaldoError, match=f"Conta com Saldo!! Saldo atual: {conta_com_saldo.get_saldo()}".upper()): # Assert
             # Act
             conta_com_saldo.fechar_conta()
 
     def teste_fechar_conta_quando_conta_esta_com_saldo_negativo_entao_raise_exception(self, conta_com_saldo_negativo):
-        with pytest.raises(SaldoNegativoError, match=f'Saldo Negativo! Saldo atual: {conta_com_saldo_negativo.get_saldo()}'): # Assert
+        with pytest.raises(SaldoNegativoError, match=f'Saldo Negativo!! Saldo atual: {conta_com_saldo_negativo.get_saldo()}'.upper()): # Assert
             # Act
             conta_com_saldo_negativo.fechar_conta()
 
