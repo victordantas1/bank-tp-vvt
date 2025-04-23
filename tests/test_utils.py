@@ -23,6 +23,12 @@ def test_cria_contas():
     assert contas[0].usuario.nome == "Ana Silva"
     assert contas[-1].usuario.nome == "Julia Fernandes"
 
+def teste_cria_conta_quando_usuarios_validos_entao_retorne_lista_contas_com_numeros_validos(lista_usuarios):
+    contas = cria_contas(lista_usuarios)
+    numeros_conta_experados = list(range(1001, 1011))
+    assert numeros_conta_experados == [conta.numero_conta for conta in contas]
+
+
 def test_busca_conta_encontra():
     usuarios = cria_usuarios()
     contas = cria_contas(usuarios)
