@@ -106,9 +106,13 @@ def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
                         except Exception as error:
                             print(error)
                             time.sleep(2)
+                    else:
+                        print("Conta não encontrada!".upper())
+                        time.sleep(2)
                 case 4:
                     print(f"Saldo negativo. Saldo Atual: {conta.get_saldo()}") if conta.saldo_negativo() else print(
                         f"Saldo Positivo. Saldo Atual: {conta.get_saldo()}")
+                    time.sleep(2)
                 case 5:
                     opcao = int(input(f"Deseja mesmo fechar sua conta (1 - sim | 0 - nao)?  "))
                     if opcao == 1:
@@ -118,8 +122,9 @@ def acessar_conta(lista_contas: List[Conta]) -> None: # pragma: no cover
                         except Exception as error:
                             print(error)
                             time.sleep(2)
+
     else:
-        print("Conta não encontrada!")
+        print("Conta não encontrada!".upper())
 
 
 
